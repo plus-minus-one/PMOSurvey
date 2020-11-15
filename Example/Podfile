@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'PMOSurvey_Example' do
+  pod 'PMOSurvey', :path => '../'
+
+  target 'PMOSurvey_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
