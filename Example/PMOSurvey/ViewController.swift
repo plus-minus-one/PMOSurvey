@@ -56,7 +56,9 @@ extension ViewController:PMOSurveyDelegate{
             return
         }
         self.questionLabel.text = res.question
-        self.answerLabel.text = res.answer
+        if let firstAns = res.answer.first{
+            self.answerLabel.text = firstAns
+        }
         PMOSurvey.shared.close()
     }
 }

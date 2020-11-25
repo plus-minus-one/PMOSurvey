@@ -16,7 +16,7 @@ class PMOSurveyViewController: UIViewController {
     
     weak var delegate:PMOSurveyDelegate?
     var survey:PMOSurveyModel = PMOSurveyModel(active: false, question: "", options: [])
-    var selectedAnswer = ""
+    var selectedAnswers:[String] = []
     
     class func initViewController(_ survey:PMOSurveyModel) -> PMOSurveyViewController {
         let surveyController = PMOSurveyViewController()
@@ -101,7 +101,7 @@ extension PMOSurveyViewController {
     }
     
     @IBAction func handlePrimaryButton(_ sender: Any) {
-        self.delegate?.respondentDidEndSurvey(PMORespondent(question: survey.question, answer: selectedAnswer), error: nil)
+        self.delegate?.respondentDidEndSurvey(PMORespondent(question: survey.question, answer: selectedAnswers), error: nil)
     }
 }
 
@@ -119,7 +119,7 @@ extension PMOSurveyViewController: UITableViewDelegate {
         if let cell = tableView.dequeueReusableCell(withIdentifier: PMOSurveyCell.reuseIdentifier, for: indexPath) as? PMOSurveyCell {
             let option = survey.options[indexPath.item]
             cell.optionLabel.text = option
-            if option == selectedAnswer{
+            if selectedAnswers.contains(option){
                 cell.optionTickView.image = UIImage.selected
             }else{
                 cell.optionTickView.image = UIImage.unselected
@@ -137,8 +137,19 @@ extension PMOSurveyViewController: UITableViewDelegate {
 // MARK: - TableView DataSource Methods
 extension PMOSurveyViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedAnswer = survey.options[indexPath.item]
-        enablePrimaryButton(true)
+        let item = survey.options[indexPath.item]
+        if survey.is_multi_selectable == true{
+            if !selectedAnswers.contains(item){
+                selectedAnswers.append(item)
+            }else{
+                selectedAnswers = selectedAnswers.filter{$0 != item}
+            }
+        }else{
+            selectedAnswers.removeAll()
+            selectedAnswers.append(item)
+        }
+        
+        enablePrimaryButton(selectedAnswers.count > 0)
         tableView.reloadData()
     }
 }

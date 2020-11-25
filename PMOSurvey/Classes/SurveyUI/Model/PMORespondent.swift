@@ -9,9 +9,9 @@ import Foundation
 
 open class PMORespondent{
     open var question: String
-    open var answer: String
+    open var answer: [String]
     
-    init(question: String, answer: String) {
+    init(question: String, answer: [String]) {
         self.question = question
         self.answer = answer
     }
