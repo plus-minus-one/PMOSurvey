@@ -49,8 +49,9 @@ extension PMOSurveyViewController{
             titleLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
             titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
         ])
-        self.titleLabel.text = survey.question
-        self.titleLabel.textAlignment = .center
+        titleLabel.text = survey.question
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
     }
     
     func configureTableView(){
