@@ -49,7 +49,8 @@ extension PMOSurveyCell{
             optionLabel.leftAnchor.constraint(equalTo: optionTickView.rightAnchor, constant: 8),
             optionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             optionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
-            optionLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 8),
+            optionLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20)
         ])
+        optionLabel.numberOfLines = 0
     }
 }
