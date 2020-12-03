@@ -79,4 +79,8 @@ open class PMOSurvey {
     public func close(){
         viewControllerToPresent?.dismiss(animated: true, completion: nil)
     }
+    
+    public func getSurveyId() -> String? {
+        return survey?.survey_id
+    }
 }

@@ -102,7 +102,7 @@ extension PMOSurveyViewController {
     }
     
     @IBAction func handlePrimaryButton(_ sender: Any) {
-        self.delegate?.respondentDidEndSurvey(PMORespondent(question: survey.question, answer: selectedAnswers), error: nil)
+        self.delegate?.respondentDidEndSurvey(PMORespondent(question: survey.question, answer: selectedAnswers, surveyId: survey.survey_id), error: nil)
     }
 }
 
