@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PMOSurvey'
-  s.version          = '0.1.6'
+  s.version          = '0.1.7'
   s.summary          = 'PMOSurvey is a library to present a survey view to your users. It uses Firebase config to collect the question and options'
   s.description      = 'PMOSurvey is a library to present a survey view to your users. It uses Firebase config to collect the question and options!'
 
