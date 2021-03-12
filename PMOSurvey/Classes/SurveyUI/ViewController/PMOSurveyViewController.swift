@@ -17,6 +17,7 @@ class PMOSurveyViewController: UIViewController {
     weak var delegate:PMOSurveyDelegate?
     var survey:PMOSurveyModel = PMOSurveyModel(active: false, question: "", options: [])
     var selectedAnswers:[String] = []
+    var cellHeights: [IndexPath: CGFloat] = [:]
     
     class func initViewController(_ survey:PMOSurveyModel) -> PMOSurveyViewController {
         let surveyController = PMOSurveyViewController()
@@ -93,6 +94,16 @@ extension PMOSurveyViewController{
         self.navigationController?.navigationBar.tintColor = UIColor.gray
         
     }
+
+    func heightForLabel(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = font
+        label.text = text
+        label.sizeToFit()
+        return label.frame.height
+    }
 }
 
 // MARK: - TableView Delegate Methods
@@ -119,19 +130,23 @@ extension PMOSurveyViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: PMOSurveyCell.reuseIdentifier, for: indexPath) as? PMOSurveyCell {
             let option = survey.options[indexPath.item]
-            cell.optionLabel.text = option
             if selectedAnswers.contains(option){
                 cell.optionTickView.image = UIImage.selected
             }else{
                 cell.optionTickView.image = UIImage.unselected
             }
+            let calculatedHeight = heightForLabel(text: option, font: .systemFont(ofSize: 17), width: (tableView.frame.width - 28))
+            cellHeights[indexPath] = calculatedHeight + 40
+            cell.optionLabel.lineBreakMode = .byWordWrapping
+            cell.optionLabel.text = option
+            cell.optionLabel.sizeToFit()
             return cell
         }
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return cellHeights[indexPath] ?? 100
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
